@@ -1,0 +1,1702 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,microtype}
+\usepackage[a4paper,margin=28mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+\hypersetup{pdftitle={A nonfree compact projective condensed abelian group},pdfsubject={A mathematical note on Boolean retractions and condensed abelian groups}}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{convention}[theorem]{Convention}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\N}{\mathbb N}
+\newcommand{\CAb}{\operatorname{Cond}(\mathrm{Ab})}
+\newcommand{\Clop}{\operatorname{Clop}}
+\newcommand{\Stone}{\operatorname{Stone}}
+\newcommand{\RO}{\operatorname{RO}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\Eq}{\operatorname{Eq}}
+\newcommand{\BA}{\operatorname{BA}_{\operatorname{tr}(3)}}
+\newcommand{\restr}{\mathbin{\upharpoonright}}
+\newcommand{\cc}{\mathfrak c}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\id}{\operatorname{id}}
+\setlist[enumerate]{label=\textup{(\roman*)},leftmargin=*,itemsep=3pt}
+\setlength{\emergencystretch}{2em}
+\title{A nonfree compact projective condensed abelian group}
+\author{}
+\date{19 October 2026}
+\begin{document}
+\maketitle
+% Begin introduction.tex
+\begin{abstract}
+We give a negative answer to Question~3.6 of Clausen and Scholze's
+\emph{Condensed Mathematics and Complex Geometry}: a compact projective
+condensed abelian group need not be free on an extremally disconnected
+compact Hausdorff space. We construct such a group as the kernel of a
+split map $\Z[S]\to\Z[T]$, where $T\subseteq S$ is a nowhere dense
+retract and both spaces are compact Hausdorff and extremally disconnected.
+The obstruction to freeness is topological:
+no nonempty clopen of $S$ disjoint from $T$ maps onto a nonempty clopen
+of $T$. We obtain the required spaces by Stone duality from complete
+ccc Boolean algebras, using Shelah's full-super tree families and a
+recursion of Boolean free products with a fixed complete target.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:introduction}
+
+For a compact Hausdorff extremally disconnected space $X$, let $\Z[X]$
+denote the free condensed abelian group on its associated condensed set.
+These groups are compact projective, and every compact projective
+condensed abelian group is a direct summand of one of them
+\cite[Proposition~3.5]{ClausenScholzeComplex}.
+Clausen and Scholze ask whether every such summand is again of this
+form \cite[Question~3.6]{ClausenScholzeComplex}. Here compactness of an
+object means that its Hom functor preserves filtered colimits.
+
+\begin{theorem}[A negative answer to Question~3.6]
+\label{thm:main}
+There is a nonzero compact projective condensed abelian group $P$ such
+that $P\not\cong\Z[X]$ for every compact Hausdorff extremally disconnected
+space $X$. More precisely, there are such spaces $S,T$ and continuous maps
+\[
+ r:S\longrightarrow T,\qquad i:T\longrightarrow S,
+ \qquad r i=\id_T,
+\]
+for which
+\[
+ P=\ker\bigl(\Z[r]:\Z[S]\longrightarrow\Z[T]\bigr)
+\]
+has this property. In particular,
+$\Z[S]\cong\Z[T]\oplus P$.
+\end{theorem}
+
+The proof starts with a topological obstruction to freeness. We arrange
+that $i(T)$ is nowhere dense in $S$ and that no nonempty clopen of $S$
+disjoint from $i(T)$ admits a continuous surjection onto a nonempty
+clopen of $T$. Every morphism between free condensed groups on compact
+Hausdorff extremally disconnected spaces has a description by finitely
+many continuous branches on clopen domains.
+Applied to this obstruction, the description rules out a nonzero
+scalar multiple of $\id_{\Z[T]}$ factoring through any finite power
+of $P$. If $P$ were $\Z[X]$, the branches of its inclusion into $\Z[S]$
+would give precisely such a factorization. This proves the criterion
+in \cref{prop:transfer}.
+
+We construct the spaces through Boolean algebras. A Boolean retraction
+$p:B\to D\subseteq B$ gives the maps $r,i$ by Stone duality. An order
+dense kernel makes $i(T)$ nowhere dense; the required obstruction says
+that no positive interval of $D$ embeds into an interval of $B$ whose
+unit is in $\ker p$. Shelah's full-super tree families supply algebras
+$E_\gamma$ that are excluded from completions represented over the
+other trees (\cref{prop:exclusion}). Local free-product insertions
+preserve these representations on complementary intervals
+(\cref{lem:complementary-omission}).
+
+The final construction fixes a complete Boolean algebra $Q$ in which
+every positive interval contains every $E_\gamma$. We recursively
+construct a complete ccc algebra $B$ and a homomorphism $q:B\to Q$.
+Each positive element sent to zero is treated once: an insertion on
+its complement excludes a suitable $E_\gamma$ from its interval.
+The inserted factors give a lift $H\to B$ of a dense subalgebra
+$H\subseteq Q$. Extending this lift gives $s:Q\to B$; since $qs$
+fixes $H$, density forces $qs=\id_Q$. Taking $D=s(Q)$ and $p=sq$ gives
+the Boolean algebras needed for \cref{prop:transfer}, and completes
+the proof of \cref{thm:main} in \cref{sec:construction}.
+
+\paragraph{Boolean conventions.}
+For a Boolean algebra $B$ and $b\in B$, write
+$B\restr b=\{x\in B:x\leq b\}$, with relative unit $b$ and relative
+complement $x\mapsto b\wedge\neg x$. Homomorphisms between intervals
+preserve their relative units. All Boolean homomorphisms preserve
+finite Boolean operations; an embedding is called \emph{complete}
+if it also preserves arbitrary joins. Completeness of a subalgebra
+$D\subseteq B$ refers to joins computed in $D$ and does not imply
+that its inclusion in $B$ is complete. An algebra is \emph{ccc} if
+every disjoint family of nonzero elements is countable. An ideal is
+\emph{order dense} if it contains a nonzero element below each
+nonzero element of the algebra.
+
+The external set-theoretic inputs are Shelah's full-super existence
+theorem and the stated chain-condition and regularity results for
+tree Boolean algebras. We specify their versions and hypotheses at
+their uses. The parameter-transfer argument, the representations of
+completed intervals, the Boolean recursion, and the condensed
+implication are proved below.
+
+% End introduction.tex
+\tableofcontents
+% Begin transfer.tex
+\section{A topological obstruction to freeness}
+\label{sec:transfer}
+
+\subsection{Free condensed groups on extremally disconnected spaces}
+
+We use the site of profinite sets with finite jointly surjective
+covers, or equivalently its extremally disconnected presentation.
+The condensed set associated to a compact Hausdorff space $Y$ assigns
+$\operatorname{Cont}(U,Y)$ to a test space $U$. Its free condensed
+abelian group $\Z[Y]$ is the sheafification of
+\[
+ U\longmapsto\Z[\operatorname{Cont}(U,Y)].
+\]
+These conventions and the extremally disconnected presentation are
+described in \cite[Theorem~2.2 and Proposition~2.7]{ScholzeCondensed}.
+
+For size conventions, choose an uncountable strong-limit cardinal
+$\kappa$ larger than the underlying sets of the spaces in a given
+construction, and use $\kappa$-small test spaces. Such bounds exist in
+ZFC. The enlargement functors between these categories are fully
+faithful and compatible with the free objects and split diagrams used
+here \cite[Proposition~2.9, Remark~2.10, Definition~2.11, and
+Remark~2.13]{ScholzeCondensed}. A proposed parameter $X$ may therefore
+be included by increasing the bound. This makes the final assertion
+independent of its initial choice.
+
+\begin{lemma}
+\label{lem:finite-branches}
+Let $X,Y$ be compact Hausdorff extremally disconnected spaces.
+\begin{enumerate}
+\item The object $\Z[X]$ is compact projective, and $\Z[Y](*)$ is the
+free abelian group on the underlying set of $Y$.
+\item Every morphism $\varphi:\Z[X]\to\Z[Y]$ has a finite clopen
+partition $X=\coprod_j X_j$ such that, on each $X_j$, its generator
+map is of the form
+\[
+ x\longmapsto\sum_{a=1}^{m_j}n_{j,a}[f_{j,a}(x)],
+ \qquad n_{j,a}\in\Z,
+\]
+where each $f_{j,a}:X_j\to Y$ is continuous. The empty sum is allowed.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+By the free-object adjunction,
+$\operatorname{Hom}(\Z[X],M)=M(X)$. In the extremally disconnected
+presentation, evaluation at $X$ is exact and preserves filtered
+colimits, proving compact projectivity
+\cite[proof of Theorem~2.2 and Proposition~2.7, p.~12]{ScholzeCondensed}.
+
+A section of the sheafification over $X$ is locally a section of the
+displayed presheaf. More explicitly, the two plus constructions used
+in sheafification give finite covers whose composites are still finite
+covers; on a refinement the section is represented by finite integral
+linear combinations of continuous maps to $Y$. The finite disjoint
+union of the covering spaces maps continuously and surjectively to
+$X$. A compact Hausdorff extremally disconnected space is projective
+with respect to compact Hausdorff surjections, so this map has a
+continuous section. Pulling the local representatives back along it
+gives a finite clopen partition of $X$ with a finite word on each part.
+This proves (ii).
+
+For a point, the identity cover refines every cover: choose a point in
+one nonempty covering member. Thus both local representatives and
+local equalities in the sheafification pull back to the point. This
+shows that sheafification neither adds elements nor introduces
+relations in the free abelian group on $Y$ at $*$, proving the
+remaining assertion in (i).
+\end{proof}
+
+\subsection{The Boolean criterion}
+
+\begin{proposition}
+\label{prop:transfer}
+Let $D\subseteq B$ be nonzero complete Boolean algebras, and let
+$p:B\to D$ be a Boolean retraction. Suppose that $K=\ker p$ is order
+dense and that
+\begin{equation}
+\label{eq:interval-obstruction}
+ 0<b\in K,\quad 0<d\in D
+ \quad\Longrightarrow\quad
+ D\restr d\not\hookrightarrow B\restr b.
+\end{equation}
+Then there is a nonzero compact projective condensed abelian group
+which is not isomorphic to $\Z[X]$ for any compact Hausdorff
+extremally disconnected space $X$.
+\end{proposition}
+
+Let $S=\Stone(B)$ and $T=\Stone(D)$. Stone duality sends the inclusion
+and the retraction to maps
+\[
+ r:S\longrightarrow T,\qquad i:T\longrightarrow S,
+ \qquad r i=\id_T.
+\]
+The map $r$ is surjective and $i$ is a closed embedding. Completeness
+of the Boolean algebras makes both spaces extremally disconnected.
+We identify $T$ with its image in $S$. A clopen of $S$ is disjoint
+from $T$ precisely when its Boolean element lies in $K$. Thus order
+density of $K$ says that $T$ has empty interior, and hence is nowhere
+dense. Condition \eqref{eq:interval-obstruction} says that there is
+no continuous surjection
+\begin{equation}
+\label{eq:topological-obstruction}
+ C\longrightarrow V
+\end{equation}
+when $C$ is a nonempty clopen of $S$ disjoint from $T$ and $V$ is a
+nonempty clopen of $T$.
+
+Define
+\begin{equation}
+\label{eq:projective-kernel}
+ \begin{aligned}
+ P&=\ker\bigl(\Z[r]:\Z[S]\to\Z[T]\bigr),\\
+ e&=\id_{\Z[S]}-\Z[i]\Z[r].
+ \end{aligned}
+\end{equation}
+Then $e^2=e$ and $\operatorname{im}e=P$. In particular $P$ is compact
+projective. It is nonzero: for $s\in S\setminus T$ the element
+$e[s]=[s]-[i(r(s))]$ is nonzero in the free group $\Z[S](*)$.
+
+We prove the proposition by establishing two assertions. The interval
+condition rules out a nonzero scalar multiple of $\id_{\Z[T]}$
+factoring through a finite power of $P$. On the other hand, if
+$P\cong\Z[X]$, the finite branches of its inclusion into $\Z[S]$
+force just such a factorization, with scalar $1$.
+
+\begin{lemma}
+\label{lem:no-scalar-factorization}
+For every positive integer $k$ and every nonzero integer $n$, there
+are no morphisms
+\[
+ a:\Z[T]\longrightarrow P^k,\qquad
+ b:P^k\longrightarrow\Z[T],\qquad ba=n\id_{\Z[T]}.
+\]
+\end{lemma}
+
+\begin{proof}
+Suppose that $a,b$ exist. Regard $a$ as a map into $\Z[S]^k$ and extend
+$b$ to
+\[
+ q=b\circ\operatorname{diag}(e,\ldots,e):
+       \Z[S]^k\longrightarrow\Z[T].
+\]
+Then $qa=n\id_{\Z[T]}$. For each summand of $\Z[S]^k$, the value of
+its $q$-column at every point of $T\subseteq S$ is zero, since
+$e[i(t)]=0$.
+
+Apply \cref{lem:finite-branches} to the components of $a$ and $q$.
+Denote their incoming branches by $f_\alpha$ and their outgoing
+branches by $g_\beta$, retaining the label of the intervening copy
+of $S$. At any $t\in T$, the coefficient of $[t]$ in $qa[t]$ equals
+$n\ne0$. Group the terms in this composition by their intermediate
+point and copy of $S$. Every group passing through a point of $T$
+has total contribution zero, because its entire $q$-column is zero.
+Consequently there is a compatible pair of branches for which
+\begin{equation}
+\label{eq:branch-return}
+ f_\alpha(t)\notin T,
+ \qquad g_\beta(f_\alpha(t))=t.
+\end{equation}
+
+There are finitely many branch pairs. For each compatible pair, take
+the subset of $T$ on which both branches are defined and
+\eqref{eq:branch-return} holds. Its domain conditions are clopen,
+the avoidance of $T$ is open, and the equality is closed because
+$T$ is Hausdorff. Thus it is locally closed. These sets cover $T$.
+A locally closed set with empty interior is nowhere dense; finitely
+many such sets cannot cover the nonempty compact Hausdorff space $T$.
+One branch pair therefore satisfies \eqref{eq:branch-return} on a
+nonempty clopen $V\subseteq T$.
+
+The compact image $f_\alpha(V)$ is disjoint from the closed subset
+$T\subseteq S$ and lies in the clopen domain of $g_\beta$. Choose a
+clopen $C_0$ of the relevant copy of $S$ containing this image,
+disjoint from $T$, and contained in that domain. Set
+\[
+ C=C_0\cap g_\beta^{-1}(V).
+\]
+Then $C$ is a nonempty clopen of $S$ disjoint from $T$, and
+$g_\beta:C\to V$ has the section $f_\alpha|_V$. In particular it is
+surjective, contradicting \eqref{eq:topological-obstruction}.
+\end{proof}
+
+\begin{lemma}
+\label{lem:freeness-factorization}
+If $P\cong\Z[X]$ for a compact Hausdorff extremally disconnected
+space $X$, then $\id_{\Z[T]}$ factors through $P^m$ for some finite
+positive integer $m$.
+\end{lemma}
+
+\begin{proof}
+Fix such an isomorphism and compose it with $P\hookrightarrow\Z[S]$.
+By \cref{lem:finite-branches}, the resulting generator map has
+finitely many continuous branches on clopen subspaces of $X$.
+Let $H\subseteq S$ be the union of their images. It is closed,
+being a finite union of compact subsets of a Hausdorff space.
+
+For every $s\in S\setminus T$, the element
+$[s]-[i(r(s))]\in P(*)$ is the image of a finite integral combination
+of $X$-generators. Its $s$-coordinate is nonzero. Hence $s$ lies in
+the image of one of the branches, and $S\setminus T\subseteq H$.
+This subset is dense, so $H=S$.
+
+Write $U_1,\ldots,U_m$ for the nonempty clopen branch domains, with
+one copy for each branch. Their disjoint union
+$Y=\coprod_{a=1}^m U_a$ maps continuously onto $S$. Here $m>0$ since
+$S$ is nonempty. Extremal disconnectedness of $S$ gives a continuous
+section, so $\Z[S]$ is a direct summand of $\Z[Y]$.
+For each $a$, the clopen decomposition
+$X=U_a\amalg(X\setminus U_a)$ makes $\Z[U_a]$ a direct summand of
+$\Z[X]$. Consequently
+\[
+ \Z[Y]=\bigoplus_{a=1}^m\Z[U_a]
+\]
+is a direct summand of $\Z[X]^m\cong P^m$.
+The original maps $r,i$ make $\Z[T]$ a direct summand of $\Z[S]$.
+Composing these split diagrams gives the asserted factorization.
+\end{proof}
+
+\begin{proof}[Proof of \cref{prop:transfer}]
+The group $P$ in \eqref{eq:projective-kernel} is nonzero compact
+projective. If it were isomorphic to $\Z[X]$,
+\cref{lem:freeness-factorization} would contradict
+\cref{lem:no-scalar-factorization} with $n=1$.
+\end{proof}
+
+It remains to construct complete Boolean algebras satisfying
+\cref{prop:transfer}. We first establish the tree-algebra obstruction
+that will enforce its interval condition.
+
+% End transfer.tex
+% Begin trees.tex
+\section{Tree representations and completion exclusion}\label{sec:trees}
+
+We construct Boolean algebras from trees in such a way that omitting one tree
+from a representation prevents its Boolean algebra from embedding into the
+completion.  The relevant combinatorial input is Shelah's full super-bigness
+theorem.  We state the part of that theorem used here, and then prove the
+passage from its model chains to the required exclusion.
+
+\subsection{The index trees and their Boolean algebras}
+
+We use the standard trees of class $K^\omega_{\tr(3)}$ from
+\cite[Definition~1.2]{Shelah2023}.  Here is their concrete form and language.
+Fix a well-ordered set of ordinals.  A node is a sequence of length at most
+$\omega$.  Every nonterminal coordinate is an increasing triple of ordinals;
+the last coordinate of a nonempty finite node is a single ordinal.  The empty
+sequence is a node.  If $\eta$ is a node and
+\[
+  \eta(i)=(\alpha_0,\alpha_1,\alpha_2),
+  \qquad \alpha_0<\alpha_1<\alpha_2,
+\]
+then each sequence
+\[
+  (\eta\restr i)\mathbin{{}^\frown}\langle\alpha_m\rangle,
+  \qquad m=0,1,2,
+\]
+is also a node.  The raw prefix $\eta\restr i$ need not itself be a node:
+its last coordinate, if any, can still be a triple.
+
+For $i<\omega$ and $m<3$, the unary function $\Res_i^m$ selects the displayed
+node when $\eta(i)$ is a triple.  At the terminal scalar coordinate of a
+finite node, and at every later level, it fixes the node.  It also fixes the
+empty node.  This is the total restriction convention of
+\cite[Definition~1.2(1)(B)($\theta$)]{Shelah2023}.
+The remaining language consists of the root constant and the following
+unary or binary relations:
+\begin{itemize}
+\item $P_i(\eta)$ means that $\eta$ has length $i$, for
+      $i\leq\omega$;
+\item $\eta\unlhd\nu$ means that $\eta$ is an initial segment of $\nu$;
+\item $\Eq_i(\eta,\nu)$ means that
+      $\eta\restr i=\nu\restr i$, for $i<\omega$; restriction of a
+      sequence shorter than $i$ leaves that sequence unchanged;
+\item $\eta<_1\nu$ means that both nodes have length $i+1$ for some
+      $i<\omega$, have the same prefix of length $i$, and their last scalar
+      coordinates are in increasing order;
+\item $\operatorname{Suc}_{i,m}(\eta,\nu)$ means that $\nu(i)$ is a
+      triple and $\eta=\Res_i^m(\nu)$.
+\end{itemize}
+In particular, every sibling fiber is well ordered.  Throughout, the
+quantifier-free type of a tuple of indices is taken in this full language,
+including formulas with restriction terms.
+In this concrete syntax, the literal initial-segment relation satisfies
+\[
+ v\unlhd w\quad\Longleftrightarrow\quad v=\varnothing\ \text{or}\ v=w.
+\]
+Indeed, a nonempty finite node ends in a scalar, whereas a longer node
+has a triple at that position; two infinite nodes can be initial
+segments of one another only if they are equal.
+
+For such a tree $I$, let $\BA(I)$ be the Boolean algebra generated by
+$x_v$, $v\in I$, freely subject to
+\begin{equation}\label{eq:tree-relations}
+ x_\eta\leq x_{\Res_n^0(\eta)},
+ \qquad
+ x_\eta\wedge x_{\Res_n^1(\eta)}\wedge x_{\Res_n^2(\eta)}=0
+ \quad(\eta\in P_\omega(I),\ n<\omega).
+\end{equation}
+This is \cite[Definition~2.1(3)]{Shelah2026}.  Each generator is nonzero.
+The following direct description explains precisely how the tree language
+controls finite Boolean relations.
+
+\begin{lemma}\label{lem:tree-relations}
+The Boolean quantifier-free type of a finite tuple of generators of
+$\BA(I)$ is determined by the joint quantifier-free type of their indices.
+\end{lemma}
+
+\begin{proof}
+For a finite tuple of Boolean elements, a \emph{signed cell} is the meet
+obtained by choosing each element or its complement.  Every Boolean equation
+in the tuple is determined by which signed cells vanish.  It therefore
+suffices to determine when a signed cell in the generators is nonzero.
+Declare its positive
+generators true, and also declare every zeroth restriction of each positive
+infinite generator true.  The resulting requirements are consistent exactly
+when both of the following conditions hold:
+\begin{enumerate}
+\item no generator required to be false has been declared true;
+\item for no positive infinite generator and no level have both its first
+      and second restrictions been declared true.
+\end{enumerate}
+Necessity follows from \eqref{eq:tree-relations}.  For sufficiency, assign
+false to every generator not yet declared true.  All the defining relations
+hold: relations whose infinite generator is false impose no condition, and
+those whose infinite generator is true are precisely the ones already
+checked.  This gives a homomorphism to the two-element Boolean algebra under
+which the cell is true.
+
+The two consistency tests use only equalities among the given indices and
+their restriction terms.  Thus they are preserved by equality of the full
+joint index types and determine the Boolean quantifier-free type.  The same
+tests show that every generator is nonzero and that distinct generators
+can be separated: when one of the two is finite, declare that generator
+true and the other false; when both are infinite, declare one true and
+the other false.  In each case the tests are satisfied.
+\end{proof}
+
+\subsection{Ordinary representations and the combinatorial input}
+
+A code is a term whose parameters are indices from a tree $J$.  Two tuples
+of codes are \emph{similar} if their term shapes agree and their parameter
+tuples have the same joint quantifier-free type in $J$.  Repeated parameter
+positions are retained, so the joint type includes all equalities between
+positions in different codes.
+
+An \emph{ordinary representation} of a Boolean algebra $F$ over $J$ is a
+map $\rho$ assigning a code to each element of $F$, such that similar tuples
+of codes come from tuples with the same Boolean quantifier-free type.  This
+is the representation condition of \cite[Definition~2.1(c),(e),(g)]{ShelahE59}.
+It is a condition on the information encoded by terms, rather than a
+homomorphism into a term algebra.  The information consists of term shapes
+and index types; it contains no additional ordering of terms.
+
+For finitary representations we fix a countable finitary vocabulary, so
+each code has finitely many subterms and index parameters.  We reserve
+disjoint families of symbols for initial constants, relative interval
+codes, finite Boolean expressions, and local copies of tree generators.
+There are countably many symbols of each finite arity available for these
+purposes.  Completion will use a separate countably ary symbol.  All the
+countable codes thereby obtained belong to
+$M_{\cc,\aleph_1}(J)$, the free term algebra with at most $\cc$ symbols of
+each countable arity.  Here and below
+\[
+ \cc=2^{\aleph_0},\qquad \lambda=(2^\cc)^+.
+\]
+
+For a family of standard trees, its specialized sum identifies the empty
+roots and places first coordinates from different trees in disjoint,
+ordered ordinal blocks.  More precisely, after choosing a common ordinal
+bound $\zeta_*$ for their coordinates, the first coordinate in the
+$\gamma$th summand is shifted into the block
+$[\zeta_*\gamma,\zeta_*(\gamma+1))$; the shift is applied componentwise
+when that coordinate is a triple.  The other coordinates are unchanged.
+This is the sum of \cite[Definition~1.4(4)]{Shelah2023}.
+
+\begin{theorem}[Shelah's full super-bigness input]\label{thm:tree-input}
+There is a family $(I_\gamma)_{\gamma<\lambda}$ of standard
+$\tr(3)$ trees, each of cardinality $\lambda$, such that
+$I_\gamma$ is $(\cc,\cc)$-super-unembeddable into
+\[
+  J_\gamma=\sum_{\substack{\delta<\lambda\\\delta\ne\gamma}}I_\delta
+\]
+with the default equivalence relation on successor positions.  Moreover,
+$\BA(I_\gamma)$ has cardinality $\lambda$ and is Knaster.
+\end{theorem}
+
+The existence assertion is
+\cite[Definitions~1.4(1),(3),(4), 1.6(2), and Lemma~1.11(1)]{Shelah2023}.
+Its cardinal hypothesis holds because $\lambda$ is regular and
+$\lambda>\cc^\cc=2^\cc$.  The Knaster assertion is
+\cite[Claim~2.6(3)]{Shelah2026}, applied with height $\omega$ and chain
+condition cardinal $\aleph_1$.  The cardinality follows from the
+presentation and the distinctness of generators proved in
+\cref{lem:tree-relations}.  Fix this family and put
+\[
+ E_\gamma=\BA(I_\gamma)\qquad(\gamma<\lambda).
+\]
+Recall that Knaster means that every
+uncountable family of nonzero elements has an uncountable pairwise
+compatible subfamily; in particular these algebras are ccc.
+
+We spell out the model-chain conclusion of super-unembeddability needed
+below.  Suppose that $I$ is $(\cc,\cc)$-super-unembeddable into $J$ as in
+the theorem.  Fix a sufficiently large regular cardinal $\chi$.
+Write $H(\chi)$ for the sets of hereditary cardinality less than $\chi$,
+and fix a well-order $<^*_\chi$ of $H(\chi)$.  Given any prescribed
+parameter $x\in H(\chi)$ and a map
+\[
+ f_1:I\longrightarrow {}^{<\cc}J,
+\]
+there are elementary submodels
+\begin{equation}\label{eq:model-chain}
+ M_n\prec N_n\prec M_{n+1}\prec(H(\chi),\in,<^*_\chi)
+ \qquad(n<\omega)
+\end{equation}
+and $\eta\in P_\omega(I)$ with the following properties.  We include
+$I,J,f_1$ among the prescribed parameters.  The prescribed
+objects belong to $M_0$, and $\cc\subseteq M_0$.  For all sufficiently
+large $n$, the three nodes $\Res_n^m(\eta)$ lie in $N_n\setminus M_n$,
+and the three sequences
+\begin{equation}\label{eq:three-sequence-types}
+ f_1(\Res_n^m(\eta)),\qquad m=0,1,2,
+\end{equation}
+have the same length and the same atomic type over $J\cap M_n$.
+Equality of atomic types here includes the truth values of all atomic
+formulas, and therefore determines the quantifier-free type.
+
+There is one further condition.  Set $U=\bigcup_n M_n$.  For each
+$w\in P_\omega(J)$, all restrictions $\Res_i^m(w)$ which belong to $U$
+belong together to some $M_r$.  This follows from clause~(vi) of
+\cite[Definition~1.4(1)]{Shelah2023}.  In the printed clause the union of
+the finite restriction nodes is interpreted as a union of sets.  If a
+finite restriction node lies in $U$, all its finitely many members lie in
+$U$ and hence in the one model bounding that union.  Closure under finite
+set formation puts the restriction node itself in the same model.
+
+The default equivalence relation in
+\cite[Definition~1.4(3)]{Shelah2023} compares every pair of singleton
+successor positions.  It is this part of the hypothesis that gives all
+three sequences in \eqref{eq:three-sequence-types} the same type.
+
+For subsequent constructions choose a marker
+$t_\gamma\in P_1(I_\gamma)$ in each tree.  In a specialized sum,
+\begin{equation}\label{eq:marker-order}
+ t_\gamma<_1t_\delta\quad\Longleftrightarrow\quad\gamma<\delta.
+\end{equation}
+Thus equality and chronology of markers are visible in the ordinary index
+type.  Relabelling any subfamily into the sum omitting one unused tree
+preserves all joint types, because it preserves the order of the blocks
+and the structure within each block.
+
+\begin{proposition}[Completion exclusion]\label{prop:exclusion}
+Suppose $I$ is $(\cc,\cc)$-super-unembeddable into a standard tree $J$
+with the default equivalence relation.  Let $F$ be a dense subalgebra of a
+Boolean algebra $C$.  If $F$ has an ordinary finitary representation over
+$J$ extending to an ordinary representation of $C$ by countable terms,
+then $\BA(I)$ does not embed into $C$.
+\end{proposition}
+
+The obstruction is the pair of relations in \eqref{eq:tree-relations}.
+We will choose a positive element of $F$ below the image of one infinite
+generator.  To transfer its inequality with the zeroth successor to both
+other successors, we need similarity after adjoining the finite parameters
+of this chosen element.  The next lemma supplies that parameter transfer;
+the following lemma applies it simultaneously to all three successors.
+
+\subsection{Adjoining finitely many external indices}
+
+\begin{lemma}\label{lem:external-parameters}
+Let $J$ be a standard $\tr(3)$ tree, and let $(M_n,N_n)_{n<\omega}$ be
+a chain as in \eqref{eq:model-chain}, with $J\in M_0$ and with the
+restriction-boundedness condition just stated.  Put $U=\bigcup_nM_n$.
+For every finite $W\subseteq J$ there exists $n_0<\omega$ such that,
+for $n\geq n_0$, any two equally indexed tuples from $J\cap U$ having
+the same quantifier-free type over $J\cap M_n$ still have the same joint
+type after adjoining the fixed tuple enumerating $W$.
+\end{lemma}
+
+\begin{proof}
+Every function in the tree language is unary, and every relation has arity
+at most two.  Moreover, an iterated restriction of a node is either the
+node itself or a single restriction: restricting at an earlier level
+selects the earlier restriction, whereas restricting at or beyond a
+terminal level fixes that node.  Initial-segment tests reduce to root
+tests and equality by the displayed description above. It therefore
+suffices to handle the other mixed
+atomic relations between an internal node, meaning a node of $J\cap U$,
+and a node or restriction arising from one fixed $w\in W$.  Relations
+involving only one of the two tuples already agree.  We show that all
+mixed relations are decided by finitely many fixed internal nodes,
+except in one case where the model-chain condition puts all necessary
+nodes in a common model.
+
+\medskip\noindent
+\emph{An internal node $w$.}
+Choose $r$ with $w\in M_r$.  Since the restrictions are definable from
+the tree and their finite indices, all restrictions of $w$ also belong
+to $M_r$.  The mixed relations are then already among the tests over
+$J\cap M_n$ for every $n\geq r$.
+
+\medskip\noindent
+\emph{An external node whose restrictions are all internal.}
+Suppose $w\notin U$, but every $\Res_i^m(w)$ belongs to $U$.
+Then $w$ is infinite, since a finite node is its own terminal restriction.
+The restriction-boundedness condition supplies one $M_r$ containing all
+these restrictions.  Equality of $w$ with an internal node is false.
+Every finite prefix test against $w$ is decided by its restrictions; for
+example,
+\[
+ \Eq_i(z,w)\quad\Longleftrightarrow\quad
+ \Eq_i(z,\Res_i^0(w)).
+\]
+Length predicates take care of nodes shorter than the prefix being tested.
+A successor relation is an equality to the appropriate restriction with
+the prescribed levels.  Sibling comparisons with $w$ are false because
+$w$ is infinite.  These statements also handle
+every restriction term applied to $w$, since the restrictions themselves
+belong to $M_r$.
+
+\medskip\noindent
+\emph{An external node with a first missing restriction.}
+Let $k$ be the least level at which some
+\[
+ r_m=\Res_k^m(w)
+\]
+does not belong to $U$.  The earlier restrictions determine the raw prefix
+$\sigma=w\restr k$, so $\sigma\in U$; for $k=0$ this is the empty
+sequence.  The sibling fiber above $\sigma$ is nonempty.  By elementarity
+there is an actual node $q_\sigma\in J\cap U$ in this fiber, of length
+$k+1$.  Fix such a node.  The formula $\Eq_k(-,q_\sigma)$ detects the
+prefix $\sigma$, with length predicates distinguishing shorter nodes.
+The parameter used here is the index node $q_\sigma$, not the possibly
+non-index sequence $\sigma$.
+
+Choose a model containing $q_\sigma$, all earlier restrictions of $w$,
+and all of the $r_m$ which belong to $U$.  For each remaining $r_m$,
+consider the internal nodes in its sibling fiber strictly above it.
+If this set is nonempty, its well ordering gives a least element $d_m$;
+enlarge the model to contain $d_m$.  If the set is empty, no parameter is
+needed.  There are at most three choices to make.  For an internal node
+$z$ in that fiber, equality $z=r_m$ is false, and
+\begin{equation}\label{eq:first-exit-cut}
+ z<_1r_m\quad\Longleftrightarrow\quad z<_1d_m
+\end{equation}
+when $d_m$ exists.  Indeed, $d_m$ is the first internal node strictly
+above $r_m$, and $r_m$ itself is not internal.  If no $d_m$ exists, every
+internal node in the fiber is below $r_m$.  The reverse inequalities are
+determined by the same data.  Thus the mixed tests in the first missing
+fiber reduce to tests over the chosen model.
+
+Suppose next that $w$ has a coordinate after this fiber.  No internal node
+can have raw prefix $w\restr(k+1)$: extracting its finitely many
+coordinates would recover the missing restriction $r_m$ inside $U$.
+Consequently every genuinely deeper restriction of $w$ is external.
+Equality with an internal node is false, prefix equality beyond the first
+exit is false, and sibling comparisons in a deeper fiber are false.
+Prefix comparisons up to the exit are determined by $q_\sigma$ and the
+earlier restrictions.  Successor relations in either
+orientation are again equalities with restrictions, together with level
+conditions.
+
+If instead $w$ is already terminal at the first missing level, its later
+restrictions repeat $w$.  All comparisons with these repeated terminal
+restrictions are governed by the same cut \eqref{eq:first-exit-cut}; they
+are not comparisons in deeper fibers.  This also covers repeated
+terminal restrictions after any subsequent application of a restriction
+function.
+
+We have accounted for every relation and every restriction term in the
+language.  For each $w\in W$ the required parameters lie in one model;
+take a common model for the finitely many $w$.  The descriptions apply
+to every internal node, independently of the length of the variable
+tuple.  Each atomic formula uses finitely many entries, so equality of
+the original types preserves all the mixed atomic formulas.  It then
+preserves their Boolean combinations, as required.
+\end{proof}
+
+\begin{lemma}[Simultaneous successor similarity]\label{lem:three-successors}
+Let $I$ be $(\cc,\cc)$-super-unembeddable into a standard tree $J$
+with the default equivalence relation.  Suppose
+\[
+ f:I\longrightarrow M_{\cc,\aleph_1}(J)
+\]
+assigns countable terms, and assigns finite terms with finite index support
+to the nodes of $P_\omega(I)$.  Then there are $\eta\in P_\omega(I)$
+and $n<\omega$ such that the three pairs
+\[
+ \bigl(f(\eta),f(\Res_n^m(\eta))\bigr),\qquad m=0,1,2,
+\]
+are similar.
+\end{lemma}
+
+\begin{proof}
+There are at most $\cc$ countable term shapes: each syntax tree is
+countable, the vocabulary has size at most $\cc$, and
+$\cc^{\aleph_0}=\cc$.  Enumerate the shapes by ordinals $\xi<\cc$.
+For each term, put its parameters in the first $\omega$ positions of a
+sequence, padding unused positions with the root of $J$.  The shape
+records which positions are used.  For a term of shape $\xi$, continue
+the padding to length
+\[
+ L_\xi=\omega\cdot(\xi+1)<\cc.
+\]
+These lengths are distinct.  The inequality holds because each such
+ordinal has cardinality less than $\cc$; it does not require regularity
+of $\cc$.  We have obtained a map
+$f_1:I\to{}^{<\cc}J$ that records both shapes and parameters.
+
+Apply the model-chain conclusion to $f_1$, including the map and the
+coding choices in the prescribed parameter.  Let $\eta$ be its witness
+and let $W$ be the finite support of $f(\eta)$.  Choose one $n$ large
+enough for \cref{lem:external-parameters} and for
+\eqref{eq:three-sequence-types}.  The three successor sequences have
+equal lengths and equal types over $J\cap M_n$.
+Each sequence belongs to $N_n$, since its argument and $f_1$ do.
+Every one of its coordinates also belongs to $N_n$: its length is below
+$\cc$ and every ordinal below $\cc$ belongs to $M_0$.
+Thus these are tuples of indices in $J\cap U$.
+
+By \cref{lem:external-parameters}, their types remain equal after
+adjoining $W$.  Equality of lengths gives equality of their term shapes.
+Together with the fixed shape and support of $f(\eta)$, this proves
+similarity of all three pairs at this same $\eta$ and $n$.
+\end{proof}
+
+\begin{proof}[Proof of \cref{prop:exclusion}]
+Suppose $h:\BA(I)\hookrightarrow C$ is an embedding.  For each finite
+node $v$, let $f(v)$ be the countable code of $h(x_v)$.  For each
+$\eta\in P_\omega(I)$, density and $h(x_\eta)>0$ give an element
+\[
+ 0<a_\eta\in F,\qquad a_\eta\leq h(x_\eta).
+\]
+Use the retained finite code of $a_\eta$ for $f(\eta)$.
+Apply \cref{lem:three-successors} and write
+$\nu_m=\Res_n^m(\eta)$ for the resulting successors.
+The defining relations give
+\[
+ a_\eta\leq h(x_\eta)\leq h(x_{\nu_0}).
+\]
+Similarity and ordinary representability transfer the last inequality
+with $a_\eta$ to both other successors.  Hence
+\[
+ 0<a_\eta
+ \leq h(x_\eta)\wedge h(x_{\nu_1})\wedge h(x_{\nu_2})=0,
+\]
+contrary to \eqref{eq:tree-relations}.
+\end{proof}
+
+\section{Represented intervals and local insertions}
+\label{sec:completion-codes}
+
+The construction will repeatedly use intervals whose units belong to a
+completed algebra but not necessarily to its represented dense subalgebra.
+We first produce finite codes for a dense algebra in each such interval.
+We then give countable codes for a completion.  Keeping these two roles
+separate allows later constructions to retain finite codes while
+\cref{prop:exclusion} is applied to the completed algebra.
+
+\subsection{Dense representations and completion codes}
+
+\begin{lemma}\label{lem:interval-representation}
+Let $F$ be a dense subalgebra of a complete Boolean algebra $C$, with an
+ordinary finitary representation $\rho$ over $J$.  For every $0<c\in C$,
+the interval $C\restr c$ has a dense subalgebra with an ordinary finitary
+representation over the same $J$.
+\end{lemma}
+
+\begin{proof}
+If $c\in F$, take $F\restr c$.  With a reserved binary symbol $R$,
+assign $a\in F\restr c$ the code
+\[
+ R\bigl(\rho(c),\rho(a)\bigr).
+\]
+Relative complementation is $a\mapsto c\wedge\neg a$, so every
+quantifier-free test in the interval is an old Boolean test with the
+additional entry $c$.  The displayed code contains exactly the data
+needed for these tests.
+
+Now suppose $c\notin F$.  Put
+\[
+ H=\{a\in F:a\leq c\},\qquad
+ G=H\cup\{c-a:a\in H\},
+\]
+where $c-a=c\wedge\neg a$.  The set $H$ is an ideal of the Boolean
+ring $F$, and $G$ is its unitization with unit $c$.  In particular, $G$
+is a Boolean subalgebra of $C\restr c$ and is dense there because it
+contains $H$.  Its two displayed forms are disjoint: if $a=c-b$ with
+$a,b\in H$, then $c=a\vee b\in F$, a contradiction.
+
+Use reserved constants for $0$ and $c$.  For the other elements, use
+distinct unary symbols $U_+$ and $U_-$ and assign
+\[
+ a\longmapsto U_+(\rho(a)),\qquad
+ c-a\longmapsto U_-(\rho(a)).
+\]
+To verify the representation condition, reduce a Boolean equation to the
+vanishing of signed cells.  After interpreting the tags, such a cell is
+an intersection of elements of $H$ and factors of the form $c-b$ with
+$b\in H$.  If at least one $H$-factor occurs, its vanishing is an old
+Boolean equation in $F$, since that factor already lies below $c$.
+If none occurs, the cell is
+\[
+ c-\bigvee_{j<r}b_j,
+\]
+which is nonzero: its vanishing would put $c=\bigvee_{j<r}b_j$ in $F$.
+Constants $0$ and $c$ are dealt with directly.  The old ordinary
+representation therefore determines every required test.
+
+In both cases the outer symbol identifies the code of an entire element
+of the relative algebra.  In particular, the old subterms inside a
+relative code are used to evaluate old Boolean equations; they need not
+separately code elements of the relative algebra.
+\end{proof}
+
+\begin{lemma}\label{lem:completion-representation}
+Let $F$ be a ccc Boolean algebra with an ordinary finitary representation
+$\rho$ over $J$, and let $C$ be its completion.  There is an ordinary
+representation
+\[
+ \widehat\rho:C\longrightarrow M_{\cc,\aleph_1}(J)
+\]
+by countable terms which retains the given code of every element of $F$.
+\end{lemma}
+
+\begin{proof}
+For each $x\in C$, choose countable families in $F$ such that
+\begin{equation}\label{eq:two-sided-approximants}
+ x=\bigvee_{n<\omega}a_{x,n},\qquad
+ \neg x=\bigvee_{n<\omega}b_{x,n}.
+\end{equation}
+To obtain the first family, choose a maximal pairwise disjoint family of
+nonzero elements of $F$ below $x$.  It is countable by ccc, and its join
+is $x$ by density and maximality.  Do the same below $\neg x$, and pad
+finite families by zeros.
+
+For $x\in F$ set $\widehat\rho(x)=\rho(x)$.  For $x\notin F$, use a
+reserved countably ary symbol $\mathsf H$ and set
+\[
+ \widehat\rho(x)
+ =\mathsf H\bigl(\rho(a_{x,0}),\rho(b_{x,0}),
+                 \rho(a_{x,1}),\rho(b_{x,1}),\ldots\bigr).
+\]
+The symbol $\mathsf H$ distinguishes these codes from retained finite
+codes.  Each has countably many finite constituent terms, and hence only
+countably many subterms and index parameters.
+
+Consider a signed cell in a finite tuple of elements of $C$.  For an
+entry outside $F$, use the positive or negative approximating join in
+\eqref{eq:two-sided-approximants}, according to its sign.  Keep entries
+from $F$ as old Boolean expressions.  Finite meets distribute over
+arbitrary joins in the complete Boolean algebra $C$.  Thus the cell is
+nonzero exactly when some selection of one approximating piece for each
+new entry has nonzero meet with the retained old expressions.  Each
+selection is a quantifier-free test on a finite tuple from $F$, and its
+codes are visible subterms of the displayed completion codes.
+
+Equal term shapes and equal joint index types preserve the data for
+every one of these finite tests.  Ordinary representability of $F$
+therefore determines the vanishing of the original cell and hence every
+Boolean equation.  This proves the representation condition.  It also
+proves the condition for countable tuples, since each quantifier-free
+formula uses only finitely many entries.
+\end{proof}
+
+In subsequent constructions the finite representation of a dense algebra
+is retained.  The countable extension in
+\cref{lem:completion-representation} is used when applying
+\cref{prop:exclusion} to its completion.
+
+% End trees.tex
+% Begin surgery.tex
+\subsection{Local insertions and complementary intervals}\label{sec:surgery}
+
+The construction will adjoin countably many free copies of a fresh tree
+algebra below an element of a completed Boolean algebra.  That element
+need not belong to the dense
+subalgebra carrying the finite representation.  The following lemma realizes
+the extension using countably many elements of the dense subalgebra.  Its
+finite product decomposition supplies the representation at successor stages;
+regular unions supply the limit stages.
+
+For each $\gamma<\lambda$, put
+\[
+ G_\gamma=*_{m<\omega}E_\gamma^{(m)},
+\]
+where $E_\gamma^{(m)}$ is a copy of $E_\gamma$ and $*$ denotes the free
+product of unital Boolean algebras.  Write $x_\eta^{(m)}$ for the generator
+indexed by $\eta\in I_\gamma$ in the $m$th copy.
+
+\begin{lemma}\label{lem:countable-free-product}
+The algebra $G_\gamma$ has cardinality $\lambda$ and is Knaster.
+\end{lemma}
+
+\begin{proof}
+It contains a copy of $E_\gamma$, and its elements are finite Boolean
+expressions in countably many copies of a set of cardinality $\lambda$.
+Hence $|G_\gamma|=\lambda$.
+
+Every positive element contains a positive rectangle
+$\bigwedge_{m\in L}e_m$, where $L\subseteq\omega$ is finite and
+$0<e_m\in E_\gamma^{(m)}$.  Given an uncountable family of positive
+elements, choose such rectangles and thin to an uncountable subfamily
+with the same $L$.  For each of the finitely many $m\in L$, use the
+Knaster property of $E_\gamma^{(m)}$ to thin again so that the $m$th
+factors are pairwise compatible.  Two resulting rectangles have nonzero
+meet because their within-copy meets are nonzero and the different
+copies are freely independent.  The corresponding original elements
+are therefore pairwise compatible.
+\end{proof}
+
+Recall that an inclusion of Boolean algebras is \emph{regular} if every
+maximal antichain of the smaller algebra remains maximal in the larger one.
+A regular embedding between complete Boolean algebras is complete.  Indeed,
+an arbitrary join can be computed using a maximal disjoint refinement of the
+elements being joined, together with the complement of their join.
+
+\begin{lemma}\label{lem:surgery}
+Let $C$ be a complete ccc Boolean algebra, and let $F\subseteq C$ be a dense
+subalgebra with an ordinary finitary representation.  Suppose that its codes
+use only trees $I_\delta$ with $\delta<\gamma$, and let $0<u\in C$.  Put
+\begin{equation}\label{eq:completed-surgery}
+ C'=(C\restr\neg u)\times
+       \widehat{(C\restr u)*G_\gamma}.
+\end{equation}
+Here $*$ denotes the free product of unital Boolean algebras and the hat
+denotes Boolean completion.  Then $C'$ is ccc and the canonical inclusion
+$C\hookrightarrow C'$ is complete.
+
+For the representation assertion, assume the following history of the
+codes.  The initial dense algebra has an ordinary representation whose
+\emph{whole codes} have distinguished outer symbols: either the nullary
+symbols of the initial algebra, or the interval and unitization symbols of
+Lemma~\ref{lem:interval-representation}.  The remaining codes have been
+formed by the finite normal-form prescription in the proof below, using
+strictly increasing tree indices and a disjoint collection of outer symbols.
+Every such stage index is greater than all tree indices in the initial codes.
+Decoding stops at a whole initial code and uses its given ordinary
+representation.  In particular, a subterm inside an initial interval code is
+not decoded as a later stage of this history.
+
+Under this hypothesis, $C'$ has a dense subalgebra $F'\supseteq F$ such that
+$F\subseteq F'$ is regular and the given representation extends to an
+ordinary finitary representation of $F'$.  The extension uses only the old
+trees and $I_\gamma$, retains all old codes, and has the same code-history
+property.  These representations remain coherent under iteration and
+continuous unions of the dense algebras.
+\end{lemma}
+
+\begin{proof}
+We first identify a dense algebra through its finite product decompositions.
+We then encode these decompositions and show that the tree types of the
+codes determine every Boolean equation.  The latter assertion is proved by
+successively removing the greatest construction index present in a finite
+tuple of codes.
+
+\paragraph{The complete extension.}
+Every positive element of $(C\restr u)*G_\gamma$ contains a rectangle
+$d\wedge e$ with $0<d\leq u$ in $C$ and $0<e\in G_\gamma$.
+An old maximal antichain meets $d$, and hence meets this rectangle.  Together
+with the unchanged factor below $\neg u$, this shows that the ordinary
+surgery is a regular extension of $C$.  Passing to its completion preserves
+regularity, so the inclusion in \eqref{eq:completed-surgery} is complete.
+The same rectangle argument gives the regularity assertion in
+\cite[Claim~2.9(2)]{Shelah2026}.
+
+The algebra $G_\gamma$ is Knaster by
+Lemma~\ref{lem:countable-free-product}.  In an uncountable family of
+positive rectangles, therefore, uncountably many fresh factors are
+pairwise compatible.  Since
+$C\restr u$ is ccc, two of the corresponding old factors are compatible.
+Their rectangles are compatible.  Thus the free product is ccc, as are its
+completion and the finite product $C'$; compare
+\cite[Claim~2.9(1)]{Shelah2026}.
+
+\paragraph{Finite products below disjoint old elements.}
+Choose a maximal disjoint family $(a_n)_{n\in N}$ of positive elements of
+$F$ below $u$.  Here $N\subseteq\omega$ may be finite.  Density of $F$ and
+the ccc imply
+\[
+ \bigvee_{n\in N}^{C}a_n=u.
+\]
+In $C'$, let $F'$ be generated by $F$ and all the elements $a_n\wedge e$,
+where $n\in N$ and $e\in G_\gamma$.  We regard the fresh algebra as lying
+in the second factor of \eqref{eq:completed-surgery}, with relative unit
+$u$.
+
+For a finite subset $L\subseteq N$, set $v=\bigvee_{n\in L}a_n$, and let
+$F_L$ be the subalgebra generated using only the local copies indexed by
+$L$.  Restriction to these finitely many disjoint elements gives
+\begin{equation}\label{eq:finite-band-product}
+ F_L\cong
+ (F\restr\neg v)\times
+ \prod_{n\in L}\bigl((F\restr a_n)*G_\gamma\bigr).
+\end{equation}
+On the $n$th factor, old and fresh nonzero elements have nonzero meet by
+the defining independence of the free product in
+\eqref{eq:completed-surgery}.  This identifies that factor with
+$(F\restr a_n)*G_\gamma$.  Conversely, a tuple in the displayed finite
+product can be pasted using the elements $a_n$ and $\neg v$ of $F$.
+This proves both surjectivity and injectivity of the displayed map.
+In particular, the use of one copy of $G_\gamma$ in the completed
+extension introduces no further relations between the different factors of
+\eqref{eq:finite-band-product}.
+
+The algebra $F'$ is dense in $C'$.  For a positive rectangle $d\wedge e$
+in the second factor, some $a_n\wedge d$ is positive.  Choose
+$0<a\in F$ with $a\leq a_n\wedge d$.  Then
+\[
+ 0<a\wedge e=a\wedge(a_n\wedge e)\in F'
+\]
+lies below the rectangle.  Density in the first factor follows from
+density of $F$ in $C$.  Every positive element of the completion contains
+a positive element of the uncompleted free product, so these observations
+prove density in all of $C'$.
+Finally, an antichain maximal in $F$ has join $1$ in $C$.  Completeness of
+$C\hookrightarrow C'$ implies that it still has join $1$ in $C'$, and
+hence is maximal in $F'$.  Thus $F\subseteq F'$ is regular.
+
+\paragraph{Finite normal forms and their codes.}
+Fix countably many symbols for finite Boolean normal forms and binary
+symbols $T_{n,m}$, $n,m<\omega$, disjoint from the outer symbols of the initial
+codes.  Use the first-level marker $t_\gamma\in I_\gamma$ fixed in
+Section~\ref{sec:trees}.  The occurrence of the generator
+$x_\eta^{(m)}$ in the $n$th local copy is recorded by the subcode
+\begin{equation}\label{eq:local-tree-code}
+ T_{n,m}(t_\gamma,\eta).
+\end{equation}
+This is not by itself the code of the element $a_n\wedge x_\eta^{(m)}$:
+the old support unit must also be recorded.  With a reserved ternary
+symbol $\mathsf{Gen}$, a full code for that element is
+\[
+ \mathsf{Gen}\bigl(t_\gamma,\rho(a_n),
+                         T_{n,m}(t_\gamma,\eta)\bigr).
+\]
+For each new element of $F'$, choose a normal form in some $F_L$ as in
+\eqref{eq:finite-band-product}.  Its code records the finite set of local
+indices, the Boolean expressions in the fresh generators, the retained
+codes of all old coefficients, and the retained codes of the units $a_n$
+used in the expression.  The marker $t_\gamma$ occurs in a designated
+position in the outer code, as well as in
+\eqref{eq:local-tree-code}.  There are only countably many possible finite
+normal-form symbols.  The tree parameter $t_\gamma$ distinguishes the
+stage, so this vocabulary can be reused at all stages.  Elements already
+in $F$ retain their old codes.
+
+We verify that this is an ordinary representation, including for tuples
+whose elements were introduced at different stages.  Suppose two finite
+tuples of codes have the same term shapes and the same joint
+quantifier-free type of their tree parameters.  Starting from the outer
+codes, stop whenever an initial whole code is reached.  Outside those
+initial codes, only finitely many construction stages occur.  Equality of
+the designated markers groups the occurrences belonging to one stage.
+The relation $<_1$ between the markers orders these groups by construction
+time, by the ordering convention of Section~\ref{sec:trees}.  The two
+tuples therefore have corresponding greatest stages.
+
+To decide a Boolean equation in either tuple, expand its difference into
+signed cells.  At the greatest stage, refine each cell by all the finitely
+many participating units $a_n$ and their common complement.  Formula
+\eqref{eq:finite-band-product} describes the resulting restrictions.
+On its $n$th factor, a Boolean expression is a finite union of rectangles
+whose old factors are Boolean expressions in the recorded old
+coefficients and units, and whose fresh factors are Boolean expressions
+in the recorded generators of $G_\gamma$.  Such a rectangle is zero
+exactly when one of its factors is zero.  On the complementary factor,
+only the old expressions remain.
+
+For a fresh-factor test, expand its expression into signed cells and
+group the generators in each cell by their copy index $m$.  Freeness of
+the copies implies that a cell is nonzero exactly when every within-copy
+cell is nonzero.  Lemma~\ref{lem:tree-relations} determines each
+within-copy test from the joint tree type.  The symbols $T_{n,m}$
+identify both the old support band and the free copy on the two sides.
+All remaining tests are Boolean equations in old coefficients and old
+units, whose codes are recorded subterms.  Thus
+corresponding tests reduce to corresponding tests with the greatest stage
+removed.  Repeating this reduction terminates, because a finite term has
+only finitely many stage occurrences.  At termination the ordinary
+representation of the initial dense algebra decides the remaining tests.
+Consequently the original Boolean equations, and their negations, have
+the same truth value for the two tuples.  This is the required ordinary
+representation property.
+
+For a relative initial algebra, this last step applies to its whole
+interval or unitization codes.  Lemma~\ref{lem:interval-representation}
+evaluates their Boolean equations using the original old representation.
+The internal coefficients of such a code serve that evaluation; they are
+not asserted to be elements of the relative initial algebra.  The
+distinguished outer symbols specify exactly where the finite-stage
+reduction stops.
+
+\paragraph{Continuous unions of the dense algebras.}
+At a limit stage take the union of the preceding dense algebras, with their
+retained codes, and then take its Boolean completion.  Any two finite
+tuples under comparison lie together in one earlier dense algebra, so
+the ordinary representation property passes to the union.  The dense
+algebras form a continuous regular chain.  Its union is ccc by
+\cite[Claim~2.10]{Shelah2026}, and every earlier dense algebra is regular
+in that union.  The induced maps between the completions are therefore
+complete embeddings.  This proves the asserted coherence at successor
+and limit stages.
+\end{proof}
+
+The dense algebras in this construction form the continuous chain; at a
+limit the completed algebra is the completion of their union.  Countable
+representations of these completions are supplied separately by
+Lemma~\ref{lem:completion-representation}.  Later applications of
+Lemma~\ref{lem:surgery} retain the finite dense codes.  In a relative
+iteration, a stage whose cut unit is zero leaves both the algebra and
+its codes unchanged and skips the corresponding tree index.
+
+\begin{lemma}\label{lem:complementary-omission}
+Consider an iteration as in Lemma~\ref{lem:surgery}, using fresh tree
+indices in strictly increasing order and the first-level markers of
+Section~\ref{sec:trees}.  Suppose that $G_\gamma$ is adjoined at the old
+completed unit $u_\gamma$.  If $B$ is the final completion, then there is
+no unital Boolean embedding
+\[
+ E_\gamma\hookrightarrow B\restr\neg u_\gamma,
+\]
+where the target has relative unit $\neg u_\gamma$.
+\end{lemma}
+
+\begin{proof}
+We construct a dense ordinary finitary representation of the complementary
+interval whose parameters lie in the omitted-tree sum $J_\gamma$.
+Its extension to the completion will then satisfy the hypotheses of
+Proposition~\ref{prop:exclusion}.
+
+The assertion is immediate if $\neg u_\gamma=0$.  Otherwise write
+$c=\neg u_\gamma>0$ in the completed algebra immediately before the
+$\gamma$th surgery.  Lemma~\ref{lem:interval-representation} gives a
+dense subalgebra of that interval with an ordinary finitary representation
+using only trees of index less than $\gamma$.  Take its whole interval
+codes as the initial codes for a new relative construction.  The surgery
+at $u_\gamma$ leaves the interval below $c$ unchanged.
+
+Suppose a later global surgery adjoins $G_\delta$ below $u_\delta$ in an
+old complete algebra $C$.  Restricting its result to $c$ gives
+\begin{equation}\label{eq:relative-completed-surgery}
+ (C\restr(c\wedge\neg u_\delta))\times
+ \widehat{(C\restr(c\wedge u_\delta))*G_\delta}.
+\end{equation}
+For a zero element $c\wedge u_\delta$, this means that the interval is
+unchanged.  For a nonzero element, the identity follows by splitting the
+old factor of the free product at its clopen $c$.  Under Stone duality a
+free product becomes a product of compact spaces, and the clopen
+partition of the old space gives a finite disjoint decomposition of that
+product.  Boolean completion commutes with this finite decomposition.
+Thus \eqref{eq:relative-completed-surgery} is precisely the completed
+surgery in the old relative algebra $C\restr c$, with cut unit
+$u_\delta\wedge c$.
+
+Apply Lemma~\ref{lem:surgery} at each of these relative successor stages,
+choosing a countable disjoint family from the current relative dense
+algebra below the relative cut unit.  This constructs a separate chain of
+dense algebras in the intervals below $c$.  Its initial whole codes are
+those of Lemma~\ref{lem:interval-representation}, and every later tree
+index is greater than every index in those codes.  Hence the code-history
+hypothesis of Lemma~\ref{lem:surgery} holds throughout this relative
+construction.
+
+At a limit stage, its relative union is dense in the corresponding global
+interval.  Indeed, if $0<b\leq c$ lies in the global completion at that
+stage, the global dense union contains $0<a\leq b$.  Both $a$ and $c$
+belong to an earlier completed stage, after the relative construction
+has begun.  The relative dense algebra at that earlier stage contains
+$0<g\leq a$.  This element $g$ belongs to the relative union and lies
+below $b$.  The complete embeddings therefore identify the completion of
+the relative union with the global interval.  The same argument applies
+to the final completion $B$.
+
+We have obtained a dense ordinarily finitarily represented subalgebra of
+$B\restr c$ whose parameters belong to the other tree components and
+the common root.  In particular, no nonroot parameter from the
+$I_\gamma$ component, including its marker $t_\gamma$, occurs.
+The initial relative construction precedes $I_\gamma$, and each later
+relative surgery introduces only its own tree and marker; its countably
+many free copies are distinguished by vocabulary symbols, not by
+additional trees.
+Relabel the allowed trees into the full omitted-tree sum $J_\gamma$ of
+Section~\ref{sec:trees}; this preserves joint tree types and the order of
+the stage markers.  Lemma~\ref{lem:completion-representation} extends
+the dense representation to an ordinary countable representation of
+$B\restr c$.  Full-super unembeddability of $I_\gamma$ into
+$J_\gamma$ now allows Proposition~\ref{prop:exclusion} to be applied,
+which excludes the asserted embedding.
+\end{proof}
+
+% End surgery.tex
+% Begin construction.tex
+\section{Construction of the counterexample}\label{sec:construction}
+
+We now construct the Boolean retraction required by
+\cref{prop:transfer}. Recall that $\lambda=(2^\cc)^+$.
+
+\begin{theorem}\label{thm:boolean}
+There are nonzero complete ccc Boolean algebras $D\subseteq B$, each of
+cardinality $\lambda$, and a Boolean homomorphism
+\[
+ p:B\longrightarrow D,\qquad p|_D=\id_D,
+\]
+with the following properties:
+\begin{enumerate}
+\item The ideal $K=\ker p$ is order dense in $B$.
+\item For every $0<b\in K$ and $0<d\in D$, there is no Boolean embedding
+\[
+ D\restr d\ \longrightarrow\ B\restr b.
+\]
+\item Every positive interval of $D$ has cardinality $\lambda$.
+\end{enumerate}
+\end{theorem}
+
+The construction uses a fixed complete algebra $Q$ in which every positive
+interval contains each $E_\gamma$. We build a complete ccc algebra $B$
+and a homomorphism $q:B\to Q$, inserting $G_\gamma$ on the complement
+of each positive element killed by $q$. The complementary-interval lemma
+will then exclude $E_\gamma$ from that element's interval. The inserted
+copies also provide lifts of the free factors of a dense subalgebra of
+$Q$; extending these lifts gives a section of $q$. Its image is the
+required complete subalgebra $D$.
+
+\subsection{A fixed complete target}
+
+We first recall the extension property of complete Boolean algebras.
+
+\begin{lemma}[Boolean extension theorem]\label{lem:boolean-extension}
+Let $L$ be a subalgebra of a Boolean algebra $R$, and let $Q$ be a
+complete Boolean algebra. Every Boolean homomorphism $h:L\to Q$
+extends to a Boolean homomorphism $R\to Q$.
+\end{lemma}
+
+\begin{proof}
+For $b\in R$, choose $y\in Q$ satisfying
+\[
+ \bigvee\{h(a):a\in L,\ a\leq b\}
+ \ \leq y\leq\
+ \bigwedge\{h(a):a\in L,\ b\leq a\}.
+\]
+Such a choice exists because $a\leq b\leq a'$ implies
+$h(a)\leq h(a')$. The formula
+\[
+ (a_1\wedge b)\vee(a_0\wedge\neg b)
+ \longmapsto
+ (h(a_1)\wedge y)\vee(h(a_0)\wedge\neg y)
+\]
+defines a homomorphism on the subalgebra $L[b]$. Indeed,
+$a_1\wedge b=0$ implies $y\leq h(\neg a_1)$, and
+$a_0\wedge\neg b=0$ implies $h(a_0)\leq y$.
+Thus zero cells have zero image, which makes the formula independent of
+the expression chosen; it then preserves the Boolean operations.
+Zorn's lemma applied to these extensions, with codomain $Q$ fixed,
+gives an extension to all of $R$.
+\end{proof}
+
+\begin{lemma}\label{lem:dense-fixing}
+Let $H$ be a dense subalgebra of a Boolean algebra $Q$. A Boolean
+endomorphism of $Q$ that fixes $H$ pointwise is the identity.
+\end{lemma}
+
+\begin{proof}
+Let $h$ be such an endomorphism and $x\in Q$. If
+$x\wedge\neg h(x)>0$, density supplies $0<a\in H$ below this
+element. But $a=h(a)\leq h(x)$, a contradiction. Hence
+$x\leq h(x)$. Applying the same argument to $\neg x$ gives the
+opposite inequality.
+\end{proof}
+
+Recall the countable free products $G_\gamma$ from
+\cref{lem:countable-free-product}. Form the ordinary Boolean free product
+and its completion
+\[
+ H=*_{\gamma<\lambda}G_\gamma,
+ \qquad Q=\widehat H.
+\]
+Write $\iota_\gamma:G_\gamma\hookrightarrow Q$ for the factor
+inclusions, and write
+$\iota_{\gamma,m}:E_\gamma\hookrightarrow Q$ for their restrictions
+to the $m$th copies, using the chosen identifications
+$E_\gamma^{(m)}\cong E_\gamma$.
+
+\begin{lemma}\label{lem:universal-target-intervals}
+For every $\gamma<\lambda$ and every $0<x\in Q$, there is a Boolean
+embedding $E_\gamma\hookrightarrow Q\restr x$ preserving the
+relative unit.
+\end{lemma}
+
+\begin{proof}
+Choose $0<h\in H$ with $h\leq x$. A finite expression for $h$
+uses only finitely many factors $E_\delta^{(m)}$. Choose $m<\omega$
+such that the factor $E_\gamma^{(m)}$ is unused. Independence of the
+free factors implies
+\[
+ h\wedge\iota_{\gamma,m}(e)>0
+ \qquad(0<e\in E_\gamma).
+\]
+Choose an ultrafilter homomorphism $\varepsilon:E_\gamma\to2$.
+The map
+\[
+ e\longmapsto
+ \bigl(h\wedge\iota_{\gamma,m}(e)\bigr)
+ \vee\varepsilon(e)(x\wedge\neg h)
+\]
+is a Boolean homomorphism with relative unit $x$. Its components have
+disjoint units $h$ and $x\wedge\neg h$, and its first component is
+injective by the displayed positivity. Here, as below,
+$\epsilon a$ means $0$ or $a$ according as $\epsilon\in2$ is $0$ or $1$.
+\end{proof}
+
+\subsection{The source algebras and the map to \texorpdfstring{$Q$}{Q}}
+
+We use the cardinal identity $\lambda^{\aleph_0}=\lambda$. Indeed,
+$(2^\cc)^{\aleph_0}=2^\cc$, and every countable subset of the regular
+cardinal $\lambda=(2^\cc)^+$ is bounded. There are $\lambda$ possible
+bounds, each of cardinality at most $2^\cc$. Consequently a ccc Boolean
+algebra of cardinality at most $\lambda$ has completion of cardinality
+at most $\lambda$: each element of the completion is the supremum of a
+countable antichain in the dense algebra.
+
+For $\alpha\leq\lambda$, we construct complete ccc Boolean algebras
+$C_\alpha$, dense subalgebras $F_\alpha$ with ordinary finitary
+representations, and compatible homomorphisms
+\[
+ q_\alpha:C_\alpha\longrightarrow Q.
+\]
+The inclusions $C_\alpha\subseteq C_\beta$ will be complete, and
+$q_\beta|_{C_\alpha}=q_\alpha$ whenever $\alpha<\beta$.
+All the source algebras will have cardinality at most $\lambda$.
+At successor stage $\gamma$ we also record a unital homomorphism
+\begin{equation}\label{eq:recorded-lift}
+ g_\gamma:G_\gamma\longrightarrow C_{\gamma+1},
+ \qquad q_{\gamma+1}g_\gamma=\iota_\gamma.
+\end{equation}
+
+\paragraph{The initial algebra.}
+Set $C_0=\mathcal P(\omega)$, and let $F_0$ be its finite--cofinite
+subalgebra. Give every element of $F_0$ a distinct reserved nullary
+code. This is an ordinary finitary representation, and $F_0$ is
+countable and dense in $C_0$. Choose a free ultrafilter on $\omega$;
+its homomorphism $C_0\to2$, followed by $2\hookrightarrow Q$, defines
+$q_0$. For the singleton elements $a_n=\{n\}$ we have
+\begin{equation}\label{eq:initial-kernel-density}
+ q_0(a_n)=0\quad(n<\omega),
+ \qquad \bigvee_{n<\omega}^{C_0}a_n=1.
+\end{equation}
+The complete source embeddings will preserve this join.
+
+\paragraph{An assignment of stages.}
+Fix an injection
+\[
+ \tau:\lambda\times\lambda\longrightarrow\lambda,
+ \qquad \tau(\beta,\xi)\geq\beta.
+\]
+To construct it, enumerate $\lambda\times\lambda$ in order type
+$\lambda$ and, for each pair $(\beta,\xi)$, choose an unused ordinal
+at least $\beta$. Fewer than $\lambda$ ordinals have been used, while
+the available tail has cardinality $\lambda$.
+
+For each $\beta<\lambda$, once $C_\beta$ has been formed, enumerate
+without repetitions the set
+\[
+ C_\beta\setminus\bigcup_{\eta<\beta}C_\eta
+   =\{x_{\beta,\xi}:\xi<\theta_\beta\},
+ \qquad\theta_\beta\leq\lambda.
+\]
+Assign $x_{\beta,\xi}$ to stage $\tau(\beta,\xi)$. At most one
+element is assigned to each stage, and that element has already been
+constructed when its assigned stage is reached.
+
+\paragraph{Successor stages.}
+Suppose $C_\alpha,F_\alpha,q_\alpha$ have been constructed. If the
+element assigned to stage $\alpha$ is positive and has image zero
+under $q_\alpha$, call it $b_\alpha$. Otherwise set $b_\alpha=0$.
+Put $u_\alpha=\neg b_\alpha$. Since
+$q_\alpha(u_\alpha)=1$, this unit is nonzero. Apply
+\cref{lem:surgery} to insert $G_\alpha$ at $u_\alpha$, obtaining
+\begin{equation}\label{eq:construction-surgery}
+ C_{\alpha+1}
+  =(C_\alpha\restr b_\alpha)\times
+      \widehat{(C_\alpha\restr u_\alpha)*G_\alpha}.
+\end{equation}
+When $b_\alpha=0$, the zero factor is omitted. Thus there is an
+insertion at every stage, including stages with no positive kernel
+element assigned to them. The lemma supplies the dense algebra
+$F_{\alpha+1}$ and its ordinary finitary representation.
+
+To extend $q_\alpha$, consider the dense subalgebra
+\[
+ R_\alpha=(C_\alpha\restr b_\alpha)\times
+             \bigl((C_\alpha\restr u_\alpha)*G_\alpha\bigr)
+ \ \subseteq C_{\alpha+1}.
+\]
+The restriction $q_\alpha:C_\alpha\restr u_\alpha\to Q$ is
+unital. Together with $\iota_\alpha:G_\alpha\to Q$, it induces a
+homomorphism from the second free-product factor to $Q$. Composing
+with the projection onto that factor gives
+$\rho_\alpha:R_\alpha\to Q$. For $c\in C_\alpha$,
+\[
+ \rho_\alpha(c)=q_\alpha(c\wedge u_\alpha)=q_\alpha(c),
+\]
+because $q_\alpha(b_\alpha)=0$.
+By \cref{lem:boolean-extension}, $\rho_\alpha$ extends to
+$q_{\alpha+1}:C_{\alpha+1}\to Q$.
+
+Let $\ell_\alpha:G_\alpha\to C_{\alpha+1}\restr u_\alpha$
+be the fresh relative factor embedding. Choose an ultrafilter
+homomorphism $\varepsilon_\alpha:G_\alpha\to2$, and define
+\begin{equation}\label{eq:unital-splice}
+ g_\alpha(e)=\ell_\alpha(e)\vee\varepsilon_\alpha(e)b_\alpha.
+\end{equation}
+The two components have complementary units, so $g_\alpha$ is a
+unital Boolean homomorphism. Its image under $q_{\alpha+1}$ is
+$\iota_\alpha(e)$, proving \eqref{eq:recorded-lift}.
+
+The source codes use only the old source coefficients and the new
+tree $I_\alpha$. Thus before stage $\alpha$ their tree indices are
+strictly less than $\alpha$, as required by \cref{lem:surgery}.
+The values of $q_\alpha$ impose no additional requirement on these
+codes: the homomorphism out of the free product exists for any pair
+of homomorphisms from its two factors. By
+\cref{lem:countable-free-product}, $|G_\alpha|=\lambda$;
+\cref{lem:surgery} and the completion bound above therefore give
+$|C_{\alpha+1}|\leq\lambda$ and the required ccc and complete
+embedding properties.
+
+\paragraph{Limit stages.}
+At a nonzero limit $\delta\leq\lambda$, set
+\[
+ F_\delta=\bigcup_{\alpha<\delta}F_\alpha,
+ \qquad C_\delta=\widehat{F_\delta}.
+\]
+The continuous regular-chain assertion in \cref{lem:surgery} gives
+the ccc, the retained ordinary representation, and complete embeddings
+of all earlier $C_\alpha$ into $C_\delta$. In particular,
+$\bigcup_{\alpha<\delta}C_\alpha$ is a subalgebra of $C_\delta$.
+The compatible maps $q_\alpha$ define a homomorphism on this union;
+\cref{lem:boolean-extension} extends it to $q_\delta:C_\delta\to Q$.
+All previously recorded identities \eqref{eq:recorded-lift} persist.
+The size of the dense union, followed by the completion bound, gives
+$|C_\delta|\leq\lambda$. This completes the recursion.
+
+\subsection{The section and the interval obstruction}\label{sec:retraction}
+
+\begin{proof}[Proof of \cref{thm:boolean}]
+Put $B=C_\lambda$ and $q=q_\lambda$. The recorded maps
+$g_\gamma:G_\gamma\to B$ induce a homomorphism
+\[
+ j:H=*_{\gamma<\lambda}G_\gamma\longrightarrow B.
+\]
+By \eqref{eq:recorded-lift}, $qj:H\to Q$ is the canonical inclusion.
+Since $B$ is complete, \cref{lem:boolean-extension} extends $j$ along
+$H\subseteq Q$ to a homomorphism $s:Q\to B$. The endomorphism $qs$
+of $Q$ fixes the dense subalgebra $H$, so \cref{lem:dense-fixing} gives
+\begin{equation}\label{eq:constructed-section}
+ qs=\id_Q.
+\end{equation}
+Consequently $s$ is injective. Define
+\begin{equation}\label{eq:constructed-retraction}
+ D=s(Q)\subseteq B,
+ \qquad p=sq:B\longrightarrow D,
+ \qquad K=\ker q=\ker p.
+\end{equation}
+Equation \eqref{eq:constructed-section} shows that $p$ fixes $D$.
+The algebra $D$ is complete because it is isomorphic to $Q$, and it
+is ccc as a subalgebra of $B$. Its joins are computed internally;
+the embedding $s$ need not preserve arbitrary joins in $B$.
+
+\paragraph{Density of the kernel.}
+The original singleton elements $a_n$ still have supremum $1$ in
+$B$ and are killed by $q$, by \eqref{eq:initial-kernel-density}.
+For every $b>0$ in $B$, distributivity of a finite meet over this
+join gives $b\wedge a_n>0$ for some $n$. This positive element lies
+in $K$ below $b$. Thus $K$ is order dense.
+
+\paragraph{Every positive kernel element was assigned a stage.}
+Every $b\in B$ belongs to some $C_\beta$ with $\beta<\lambda$.
+Indeed, choose a maximal antichain of the dense algebra $F_\lambda$
+below $b$. It is countable, and its supremum in $B$ is $b$.
+Its members lie in some $F_\beta$ because
+$\operatorname{cf}(\lambda)>\aleph_0$. Their supremum in $C_\beta$
+equals their supremum in $B$, since $C_\beta\subseteq B$ is complete.
+This proves
+\begin{equation}\label{eq:bounded-source}
+ B=\bigcup_{\beta<\lambda}C_\beta.
+\end{equation}
+In particular, every element has a first stage of appearance and is
+assigned a stage by the injection $\tau$.
+
+Fix $0<b\in K$, and let $\gamma$ be its assigned stage. Compatibility
+of the maps to the fixed algebra $Q$ gives $q_\gamma(b)=q(b)=0$.
+Hence $b_\gamma=b$ and $G_\gamma$ was inserted at $\neg b$.
+By \cref{lem:complementary-omission},
+\begin{equation}\label{eq:kernel-tree-exclusion}
+ E_\gamma\not\hookrightarrow B\restr b.
+\end{equation}
+On the other hand, \cref{lem:universal-target-intervals} and the
+isomorphism $s:Q\xrightarrow{\sim}D$ give, for every $0<d\in D$,
+\begin{equation}\label{eq:tree-in-target-interval}
+ E_\gamma\hookrightarrow D\restr d.
+\end{equation}
+An embedding $D\restr d\hookrightarrow B\restr b$ would contradict
+\eqref{eq:kernel-tree-exclusion} by composition. This proves the
+required interval obstruction for every $b>0$ in $K$ and $d>0$ in $D$.
+
+Finally, \cref{lem:universal-target-intervals} applies to any fixed
+$\gamma<\lambda$, so $|E_\gamma|=\lambda$ gives
+\[
+ \lambda\leq |D\restr d|\leq |D|\leq |B|\leq\lambda
+ \qquad(0<d\in D).
+\]
+Both algebras are nonzero since $Q$ and $B$ are nontrivial unital
+Boolean algebras. These inequalities prove all the cardinality
+assertions.
+\end{proof}
+
+\begin{proof}[Proof of \cref{thm:main}]
+Apply \cref{prop:transfer} to the inclusion and retraction supplied by
+\cref{thm:boolean}. Explicitly, set $S=\Stone(B)$ and $T=\Stone(D)$,
+and let $r:S\to T$ and $i:T\to S$ be dual to the inclusion and the
+retraction, respectively. Then $ri=\id_T$, and
+\[
+ P=\ker\bigl(\Z[r]:\Z[S]\to\Z[T]\bigr)
+\]
+is nonzero compact projective and is not isomorphic to $\Z[X]$ for any
+compact Hausdorff extremally disconnected space $X$. The section
+$\Z[i]$ gives the asserted splitting
+$\Z[S]\cong\Z[T]\oplus P$.
+\end{proof}
+
+The same interval obstruction identifies the kernel from the inclusion
+$D\subseteq B$ alone and determines its retraction uniquely.
+
+\begin{corollary}\label{cor:intrinsic-kernel}
+For the algebras in \cref{thm:boolean}, put
+\[
+ J_D(B)=\{b\in B:\text{no positive interval of }D
+                       \text{ embeds into }B\restr b\}.
+\]
+Then $J_D(B)=\ker p$, and $p$ is the unique Boolean homomorphism
+$B\to D$ whose restriction to $D$ is the identity.
+\end{corollary}
+
+\begin{proof}
+The interval obstruction gives $\ker p\subseteq J_D(B)$, including
+$b=0$. Conversely, suppose $p(b)=d_0>0$. Choose an ultrafilter
+homomorphism $\varepsilon:D\restr d_0\to2$. The formula
+\begin{equation}\label{eq:interval-section}
+ D\restr d_0\longrightarrow B\restr b,
+ \qquad x\longmapsto(b\wedge x)\vee
+                  \varepsilon(x)(b\wedge\neg d_0)
+\end{equation}
+defines a Boolean homomorphism with relative unit $b$: its two
+components have disjoint units $b\wedge d_0$ and $b\wedge\neg d_0$.
+Applying $p$ to its value gives $x$. It is therefore injective, so
+$b\notin J_D(B)$. Hence
+\begin{equation}\label{eq:intrinsic-ideal}
+ J_D(B)=\ker p.
+\end{equation}
+
+If $p':B\to D$ is another retraction, the same formula with $p'$
+shows that $p'(b)>0$ implies $b\notin J_D(B)$. Thus $p'$ kills
+$\ker p$. For every $b\in B$ we have
+$b\mathbin{\triangle}p(b)\in\ker p$. Applying $p'$ and using
+$p'|_D=\id_D$ gives $p'(b)=p(b)$, proving uniqueness.
+\end{proof}
+
+\begin{remark}[A smaller admissible cardinal]\label{rem:smaller-cardinal}
+The entire Boolean construction, including its interval obstruction and
+uniqueness conclusion, also works with
+\[
+ \lambda_*=(2^{\aleph_1})^+\leq\lambda.
+\]
+The inequality need not be strict.  The refinement uses a different coding
+of term shapes in \cref{lem:three-successors}; the term algebra remains
+$M_{\cc,\aleph_1}(J)$.
+
+There are at most $\cc$ countable term shapes.  Assign to each shape
+$\sigma$ a distinct binary sequence $b_\sigma\in2^\omega$.  For an
+omitted-tree sum $J$ used in the construction, fix its root $o$ and a
+nonroot index $t$. Such sums are nontrivial. For each term $f(v)$, enumerate its
+index occurrences as $(a_{v,k})_{k<\omega}$, retaining repetitions and
+padding unused positions by $o$; its shape records which positions are
+used.  Replace the variable-length code in that lemma by
+\[
+ \begin{split}
+ f_1(v)(2k)&=
+ \begin{cases}
+ o,&b_{\sigma_v}(k)=0,\\
+ t,&b_{\sigma_v}(k)=1,
+ \end{cases}\\
+ f_1(v)(2k+1)&=a_{v,k},
+ \end{split}
+ \qquad k<\omega,
+\]
+where $\sigma_v$ is the shape of $f(v)$.  Include $t$, the coding choices,
+and $f_1$ in the prescribed parameter for super-unembeddability.
+
+Now $(\aleph_1,\aleph_1)$-super-unembeddability suffices: every code
+sequence has length $\omega<\aleph_1$.  The three successor sequences
+belong to $N_n$, and so do all their coordinates, since
+$\omega\subseteq M_0$.  Equality of their atomic types recovers every
+shape bit through the tests $z_{2k}=o$ and preserves the joint types of
+the odd-coordinate index lists.  By \cref{lem:external-parameters}, these
+types remain equal after adjoining the finite support of $f(\eta)$,
+once $n$ is sufficiently large.  Thus the same three pairs are similar,
+which proves the successor-similarity and completion-exclusion statements
+for these target trees under the weaker super-unembeddability hypothesis.
+
+The required full family exists by \cite[Lemma~1.11(1)]{Shelah2023}:
+its hypotheses are that $\lambda_*$ is regular,
+$\lambda_*>\mu\geq\kappa$, and $\lambda_*>\mu^\kappa$.
+Take $\mu=\kappa=\aleph_1$ and use
+$(\aleph_1)^{\aleph_1}=2^{\aleph_1}$.
+Also $\lambda_*^{\aleph_0}=\lambda_*$: every countable sequence in
+$\lambda_*$ is bounded, and
+$(2^{\aleph_1})^{\aleph_0}=2^{\aleph_1}$.
+Consequently the completion size bounds and bookkeeping remain valid.
+With this family and the modified similarity argument, the represented
+intervals, local insertions, fixed-target construction, uniqueness proof,
+and passage to condensed abelian groups apply unchanged.
+\end{remark}
+
+
+% End construction.tex
+% Begin references.tex
+\begin{thebibliography}{9}
+\raggedright
+
+\bibitem{ClausenScholzeComplex}
+D.~Clausen and P.~Scholze,
+\emph{Condensed Mathematics and Complex Geometry},
+arXiv:2605.11731v1, May 2026.
+\url{https://arxiv.org/abs/2605.11731}.
+
+\bibitem{ScholzeCondensed}
+P.~Scholze,
+\emph{Lectures on Condensed Mathematics},
+lecture notes, May 2019; all results joint with D.~Clausen.
+\url{https://www.math.uni-bonn.de/people/scholze/Condensed.pdf}.
+
+\bibitem{Shelah2023}
+S.~Shelah,
+\emph{Building complicated index models and Boolean algebras},
+Sh:511, version May 23, 2023.
+\url{https://shelah.logic.at/files/230169/511.pdf}.
+
+\bibitem{Shelah2026}
+S.~Shelah,
+\emph{Building complicated index models and Boolean algebras},
+Sh:511, version June 9, 2026.
+\url{https://shelah.logic.at/files/255135/511.pdf}.
+
+\bibitem{ShelahE59}
+S.~Shelah,
+\emph{General non-structure theory},
+Sh:E59, version October 11, 2024.
+\url{https://shelah.logic.at/files/242052/E59.pdf}.
+
+\end{thebibliography}
+
+% End references.tex
+\end{document}
